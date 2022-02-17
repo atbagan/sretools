@@ -1,13 +1,13 @@
 package cmd
 
 import (
-	"automation/config"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
+	"sretools/config"
 )
 
 var settings = new(config.Config)

@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"automation/config"
-	"automation/helpers"
 	"fmt"
 	"github.com/spf13/cobra"
+	"sretools/config"
+	"sretools/helpers"
 )
 
 var eventDisableCmd = &cobra.Command{

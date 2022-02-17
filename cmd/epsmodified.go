@@ -1,14 +1,14 @@
 package cmd
 
 import (
-	"automation/config"
-	"automation/helpers"
 	"context"
 	"fmt"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/spf13/cobra"
 	"os"
+	"sretools/config"
+	"sretools/helpers"
 )
 
 var associateCmd = &cobra.Command{
