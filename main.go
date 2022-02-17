@@ -1,6 +1,6 @@
 package main
 
-import "sretools/cmd"
+import "github.com/atbagan/sretools/cmd"
 
 func main() {
 	cmd.Execute()
