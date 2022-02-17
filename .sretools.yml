@@ -1,0 +1,5 @@
+eps:
+  serviceid: "vpce-svc-0d47eb9aceb2119e5"
+
+eventbridge:
+  nameprefix: "esp-prd"
