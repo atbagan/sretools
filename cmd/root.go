@@ -27,6 +27,7 @@ func Execute() {
 }
 
 func init() {
+	cobra.OnInitialize(initConfig)
 	settings.Verbose = rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Verbose output")
 	settings.Profile = rootCmd.PersistentFlags().StringP("profile", "p", "", "Use a specific profile")
 	settings.Region = rootCmd.PersistentFlags().StringP("region", "r", "", "Use a specific region")
@@ -37,7 +38,7 @@ func init() {
 func initConfig() {
 	viper.SetConfigName(".sretools") // name of config file (without extension)
 	viper.SetConfigType("yml")       // set the config file type
-	viper.AddConfigPath("$HOME")     // adding home directory as first search path
+	viper.AddConfigPath(".")         // adding home directory as first search path
 	viper.AutomaticEnv()             // read in environment variables that match
 
 	// If a config file is found, read it in.
