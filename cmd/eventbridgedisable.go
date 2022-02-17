@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/atbagan/sretools/config"
+	"github.com/atbagan/sretools/helpers"
 	"github.com/spf13/cobra"
-	"sretools/config"
-	"sretools/helpers"
 )
 
 var eventDisableCmd = &cobra.Command{

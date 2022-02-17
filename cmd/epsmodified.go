@@ -3,12 +3,12 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"github.com/atbagan/sretools/config"
+	"github.com/atbagan/sretools/helpers"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/spf13/cobra"
 	"os"
-	"sretools/config"
-	"sretools/helpers"
 )
 
 var associateCmd = &cobra.Command{

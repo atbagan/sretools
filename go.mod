@@ -1,4 +1,4 @@
-module sretools
+module github.com/atbagan/sretools
 
 go 1.16
 

@@ -3,11 +3,11 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/atbagan/sretools/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
-	"sretools/config"
 )
 
 var settings = new(config.Config)
