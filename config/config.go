@@ -8,6 +8,8 @@ type Config struct {
 	NameFile    *string
 	Eps         EpsConfiguration
 	Eventbridge EventbridgeConfiguration
+	Ecs         EcsConfiguration
+	ErrorCode   bool
 }
 
 // EpsConfiguration config struct that holds config values for EPS
@@ -18,4 +20,8 @@ type EpsConfiguration struct {
 // EventbridgeConfiguration config struct that holds config values for Eventbridge
 type EventbridgeConfiguration struct {
 	Nameprefix string
+}
+
+type EcsConfiguration struct {
+	Cluster string
 }
