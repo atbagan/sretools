@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/atbagan/sretools/config"
-	"github.com/atbagan/sretools/helpers"
+	"github.com/atbagan/sretools/internal/helpers"
 	"github.com/spf13/cobra"
 )
 

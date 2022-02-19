@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	c "github.com/atbagan/sretools/config"
-	"github.com/atbagan/sretools/helpers"
+	"github.com/atbagan/sretools/internal/helpers"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
