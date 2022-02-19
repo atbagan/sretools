@@ -3,8 +3,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/atbagan/sretools)](https://goreportcard.com/report/github.com/atbagan/sretools)
 [![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/gomods/athens)
 [![GoDoc reference example](https://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/nanomsg.org/go/mangos/v2)
-[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/badges.svg)](https://GitHub.com/atbagan/sretools/graphs/contributors/)
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://GitHub.com/atbagan/sretools/issues/)
 
 [comment]: <> ([![Docker Pulls]&#40;&#41;]&#40;&#41;)
 # Welcome to Sretools 
