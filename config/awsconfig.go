@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	external "github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/codedeploy"
 	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
@@ -63,4 +64,9 @@ func (config *AWSConfig) EventbridgeClient() *eventbridge.Client {
 //DmsClient returns a databasemigrationservice client
 func (config *AWSConfig) DmsClient() *databasemigrationservice.Client {
 	return databasemigrationservice.NewFromConfig(config.Config)
+}
+
+//CdClient returns codedeploy client
+func (config *AWSConfig) CdClient() *codedeploy.Client {
+	return codedeploy.NewFromConfig(config.Config)
 }
