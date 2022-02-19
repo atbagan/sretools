@@ -28,6 +28,7 @@ type List struct {
 	ARN    string
 	Status string
 }
+
 type AtomicInt struct {
 	mu sync.Mutex // A lock than can be held by one goroutine at a time.
 	n  int
