@@ -13,17 +13,17 @@ import (
 )
 
 var deploymentCmd = &cobra.Command{
-Use:   "deployment",
-Short: "Codedeploy Deployment",
-Long:  "Create a codedeploy deployment",
-Run:  createDeployment,
+	Use:   "deployment",
+	Short: "Codedeploy Deployment",
+	Long:  "Create a codedeploy deployment",
+	Run:   createDeployment,
 }
 
 func init() {
 	codedeployCmd.AddCommand(deploymentCmd)
 }
 
-func createDeployment(cmd *cobra.Command, args []string)  {
+func createDeployment(cmd *cobra.Command, args []string) {
 	awsConfig := c.DefaultAwsConfig(*settings)
 	var configuration c.Config
 	err := viper.Unmarshal(&configuration)
@@ -39,18 +39,18 @@ func createDeployment(cmd *cobra.Command, args []string)  {
 		Description:                   aws.String(configuration.Codedeploy.Description),
 		FileExistsBehavior:            "",
 		IgnoreApplicationStopFailures: false,
-		Revision:                      &types.RevisionLocation{
+		Revision: &types.RevisionLocation{
 			S3Location: &types.S3Location{
-				Bucket: aws.String(configuration.Codedeploy.Bucket),
-				ETag: aws.String("ETag"),
-				Key: aws.String(configuration.Codedeploy.Key),
-				Version: aws.String("VersionID"),
+				Bucket:  aws.String(configuration.Codedeploy.Bucket),
+				ETag:    aws.String(configuration.Codedeploy.Etag),
+				Key:     aws.String(configuration.Codedeploy.Key),
+				Version: aws.String(configuration.Codedeploy.Version),
 			},
 		},
-		TargetInstances:               nil,
-		UpdateOutdatedInstancesOnly:   false,
+		TargetInstances:             nil,
+		UpdateOutdatedInstancesOnly: false,
 	}
-	_ , err = awsConfig.CdClient().CreateDeployment(context.TODO(), params)
+	_, err = awsConfig.CdClient().CreateDeployment(context.TODO(), params)
 	if err != nil {
 		fmt.Sprintf("failed to load the config, %v", err)
 		fmt.Println("failed here")

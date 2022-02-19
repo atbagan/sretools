@@ -1,6 +1,8 @@
 package config
 
-import "github.com/aws/aws-sdk-go-v2/service/codedeploy/types"
+import (
+	"github.com/aws/aws-sdk-go-v2/service/codedeploy/types"
+)
 
 // Config holds the global configuration settings
 type Config struct {
@@ -45,6 +47,8 @@ type CodedeployConfiguration struct {
 	UpdateOutdatedInstancesOnly   bool
 	Bucket                        string
 	Key                           string
+	Etag                          string
+	Version                       string
 }
 
 type Revision struct {
