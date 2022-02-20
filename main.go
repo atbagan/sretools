@@ -1,7 +1,9 @@
 package main
 
-import "github.com/atbagan/sretools/cmd"
+import (
+	tools "github.com/atbagan/sretools/cmd/sretools"
+)
 
 func main() {
-	cmd.Execute()
+	tools.Execute()
 }
