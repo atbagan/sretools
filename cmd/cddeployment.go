@@ -40,11 +40,13 @@ func createDeployment(cmd *cobra.Command, args []string) {
 		FileExistsBehavior:            "",
 		IgnoreApplicationStopFailures: false,
 		Revision: &types.RevisionLocation{
+			RevisionType: "S3",
 			S3Location: &types.S3Location{
-				Bucket:  aws.String(configuration.Codedeploy.Bucket),
-				ETag:    aws.String(configuration.Codedeploy.Etag),
-				Key:     aws.String(configuration.Codedeploy.Key),
-				Version: aws.String(configuration.Codedeploy.Version),
+				Bucket:     aws.String(configuration.Codedeploy.Bucket),
+				ETag:       aws.String(configuration.Codedeploy.Etag),
+				Key:        aws.String(configuration.Codedeploy.Key),
+				Version:    aws.String(configuration.Codedeploy.Version),
+				BundleType: "JSON",
 			},
 		},
 		TargetInstances:             nil,
@@ -53,7 +55,7 @@ func createDeployment(cmd *cobra.Command, args []string) {
 	_, err = awsConfig.CdClient().CreateDeployment(context.TODO(), params)
 	if err != nil {
 		fmt.Sprintf("failed to load the config, %v", err)
-		fmt.Println("failed here")
+		fmt.Println(err)
 		os.Exit(1)
 	}
 }
