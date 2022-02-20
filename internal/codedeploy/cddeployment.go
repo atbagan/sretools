@@ -1,8 +1,9 @@
-package cmd
+package codedeploy
 
 import (
 	"context"
 	"fmt"
+	tools "github.com/atbagan/sretools/cmd/sretools"
 	c "github.com/atbagan/sretools/config"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	cd "github.com/aws/aws-sdk-go-v2/service/codedeploy"
@@ -20,11 +21,11 @@ var deploymentCmd = &cobra.Command{
 }
 
 func init() {
-	codedeployCmd.AddCommand(deploymentCmd)
+	tools.CodedeployCmd.AddCommand(deploymentCmd)
 }
 
 func createDeployment(cmd *cobra.Command, args []string) {
-	awsConfig := c.DefaultAwsConfig(*settings)
+	awsConfig := c.DefaultAwsConfig(*tools.Settings)
 	var configuration c.Config
 	err := viper.Unmarshal(&configuration)
 	if err != nil {

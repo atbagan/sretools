@@ -1,4 +1,4 @@
-package cmd
+package sretools
 
 import (
 	"github.com/spf13/cobra"

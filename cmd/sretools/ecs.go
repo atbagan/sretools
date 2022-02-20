@@ -1,13 +1,13 @@
-package cmd
+package sretools
 
 import "github.com/spf13/cobra"
 
-var ecsCmd = &cobra.Command{
+var EcsCmd = &cobra.Command{
 	Use:   "ecs",
 	Short: "ECS Service Commands",
 	Long:  "Commands related to Elastic Container Service.",
 }
 
 func init() {
-	rootCmd.AddCommand(ecsCmd)
+	rootCmd.AddCommand(EcsCmd)
 }

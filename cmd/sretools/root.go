@@ -1,4 +1,4 @@
-package cmd
+package sretools
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-var settings = new(config.Config)
+var Settings = new(config.Config)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -28,10 +28,10 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	settings.Verbose = rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Verbose output")
-	settings.Profile = rootCmd.PersistentFlags().StringP("profile", "p", "", "Use a specific profile")
-	settings.Region = rootCmd.PersistentFlags().StringP("region", "r", "", "Use a specific region")
-	settings.NameFile = rootCmd.PersistentFlags().StringP("namefile", "n", "", "Use this file to provide names")
+	Settings.Verbose = rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Verbose output")
+	Settings.Profile = rootCmd.PersistentFlags().StringP("profile", "p", "", "Use a specific profile")
+	Settings.Region = rootCmd.PersistentFlags().StringP("region", "r", "", "Use a specific region")
+	Settings.NameFile = rootCmd.PersistentFlags().StringP("namefile", "n", "", "Use this file to provide names")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -48,8 +48,8 @@ func initConfig() {
 }
 
 func getName(id string) string {
-	if *settings.NameFile != "" {
-		nameFile, err := ioutil.ReadFile(*settings.NameFile)
+	if *Settings.NameFile != "" {
+		nameFile, err := ioutil.ReadFile(*Settings.NameFile)
 		if err != nil {
 			panic(err)
 		}

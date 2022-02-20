@@ -1,8 +1,9 @@
-package cmd
+package ecs
 
 import (
 	"context"
 	"fmt"
+	tools "github.com/atbagan/sretools/cmd/sretools"
 	c "github.com/atbagan/sretools/config"
 	"github.com/atbagan/sretools/internal/helpers"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
@@ -21,7 +22,7 @@ var healthCmd = &cobra.Command{
 }
 
 func init() {
-	ecsCmd.AddCommand(healthCmd)
+	tools.EcsCmd.AddCommand(healthCmd)
 }
 
 type List struct {
@@ -53,7 +54,7 @@ func (a *AtomicInt) Value() int {
 }
 
 func getHealthCheck(cmd *cobra.Command, args []string) {
-	awsConfig := c.DefaultAwsConfig(*settings)
+	awsConfig := c.DefaultAwsConfig(*tools.Settings)
 
 	var configuration c.Config
 	err := viper.Unmarshal(&configuration)

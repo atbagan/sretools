@@ -1,13 +1,13 @@
-package cmd
+package sretools
 
 import "github.com/spf13/cobra"
 
-var codedeployCmd = &cobra.Command{
+var CodedeployCmd = &cobra.Command{
 	Use:   "codedeploy",
 	Short: "CodeDeploy Commands",
 	Long:  "Commands related to CodeDeploy.",
 }
 
 func init() {
-	rootCmd.AddCommand(codedeployCmd)
+	rootCmd.AddCommand(CodedeployCmd)
 }
