@@ -1,7 +1,6 @@
-package dms
+package sretools
 
 import (
-	tools "github.com/atbagan/sretools/cmd/sretools"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +12,7 @@ var dmsRestartCmd = &cobra.Command{
 }
 
 func init() {
-	tools.DmsCmd.AddCommand(dmsRestartCmd)
+	dmsCmd.AddCommand(dmsRestartCmd)
 }
 
 func restartDms(cmd *cobra.Command, args []string) {

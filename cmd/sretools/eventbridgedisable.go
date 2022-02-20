@@ -1,8 +1,7 @@
-package eventbridge
+package sretools
 
 import (
 	"fmt"
-	tools "github.com/atbagan/sretools/cmd/sretools"
 	"github.com/atbagan/sretools/config"
 	"github.com/atbagan/sretools/internal/helpers"
 	"github.com/spf13/cobra"
@@ -16,11 +15,11 @@ var eventDisableCmd = &cobra.Command{
 }
 
 func init() {
-	tools.EventbridgeCmd.AddCommand(eventDisableCmd)
+	eventbridgeCmd.AddCommand(eventDisableCmd)
 }
 
 func disableEventRules(cmd *cobra.Command, args []string) {
-	awsConfig := config.DefaultAwsConfig(*tools.Settings)
+	awsConfig := config.DefaultAwsConfig(*settings)
 	rules := helpers.GetEventbridgeRules(awsConfig.EventbridgeClient())
 
 	for _, v := range rules {

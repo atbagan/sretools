@@ -1,9 +1,8 @@
-package eps
+package sretools
 
 import (
 	"context"
 	"fmt"
-	tools "github.com/atbagan/sretools/cmd/sretools"
 	c "github.com/atbagan/sretools/config"
 	"github.com/atbagan/sretools/internal/helpers"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
@@ -20,12 +19,12 @@ var associateCmd = &cobra.Command{
 }
 
 func init() {
-	tools.EpsCmd.AddCommand(associateCmd)
+	epsCmd.AddCommand(associateCmd)
 }
 
 //associateLoadBalancerEps associates NLB's with the given endpoint service
 func associateLoadBalancerEps(cmd *cobra.Command, args []string) {
-	awsConfig := c.DefaultAwsConfig(*tools.Settings)
+	awsConfig := c.DefaultAwsConfig(*settings)
 	nlbArns := helpers.GetNlbLoadBalancerArns(awsConfig.ElbClient())
 
 	var configuration c.Config
