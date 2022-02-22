@@ -32,8 +32,15 @@ func createDeployment(cmd *cobra.Command, args []string) {
 	}
 
 	params := &cd.CreateDeploymentInput{
-		ApplicationName:               aws.String(configuration.Codedeploy.ApplicationName),
-		AutoRollbackConfiguration:     nil,
+		ApplicationName: aws.String(configuration.Codedeploy.ApplicationName),
+		AutoRollbackConfiguration: &types.AutoRollbackConfiguration{
+			Enabled: true,
+			Events: []types.AutoRollbackEvent{
+				"DEPLOYMENT_FAILURE",
+				"DEPLOYMENT_STOP_ON_ALARM",
+				"DEPLOYMENT_STOP_ON_REQUEST",
+			},
+		},
 		DeploymentConfigName:          aws.String(configuration.Codedeploy.DeploymentConfigName),
 		DeploymentGroupName:           aws.String(configuration.Codedeploy.DeploymentGroupName),
 		Description:                   aws.String(configuration.Codedeploy.Description),
