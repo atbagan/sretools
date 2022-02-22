@@ -24,11 +24,13 @@ func init() {
 	ecsCmd.AddCommand(healthCmd)
 }
 
+//List struct for arn and current health status
 type List struct {
 	ARN    string
 	Status string
 }
 
+// AtomicInt state variable
 type AtomicInt struct {
 	mu sync.Mutex // A lock than can be held by one goroutine at a time.
 	n  int
@@ -103,6 +105,7 @@ func getHealthCheck(cmd *cobra.Command, args []string) {
 	}
 }
 
+//GetTargetHealth get tg health
 func GetTargetHealth(arn string, n *AtomicInt, ch chan<- *List, svc *elasticloadbalancingv2.Client) {
 	defer wg.Done()
 	var params elasticloadbalancingv2.DescribeTargetHealthInput
