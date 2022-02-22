@@ -13,8 +13,8 @@ import (
 
 var associateCmd = &cobra.Command{
 	Use:   "associate",
-	Short: "Modify EPS",
-	Long:  "Modify Vpc EPS to associate LB with EPS",
+	Short: "Associate LB EPS",
+	Long:  "Modify Vpc EPS to associate a LB with an endpoint service",
 	Run:   associateLoadBalancerEps,
 }
 
