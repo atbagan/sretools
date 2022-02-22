@@ -42,19 +42,11 @@ type CodedeployConfiguration struct {
 	Description                   string
 	FileExistsBehavior            types.FileExistsBehavior
 	IgnoreApplicationStopFailures bool
-	Revision                      Revision
+	Revision                      *types.RevisionLocation
 	TargetInstances               *types.TargetInstances
 	UpdateOutdatedInstancesOnly   bool
 	Bucket                        string
 	Key                           string
 	Etag                          string
 	Version                       string
-}
-
-type Revision struct {
-	RevisionType   string `json:"revisionType"`
-	AppSpecContent struct {
-		Content string `json:"content"`
-		Sha256  string `json:"sha256"`
-	} `json:"appSpecContent"`
 }
