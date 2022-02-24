@@ -30,7 +30,6 @@ func GetServices(svc *ecs.Client) (*TargetGroups, error) {
 	result, err := svc.ListServices(context.TODO(), params)
 	if err != nil {
 		fmt.Sprintf("failed to load the config, %v", err)
-		fmt.Println("failed here")
 		os.Exit(1)
 	}
 
