@@ -15,7 +15,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sts"
 )
 
-//AWSConfig is a holder for AWS Config type information
+// AWSConfig is a holder for AWS Config type information
 type AWSConfig struct {
 	Config aws.Config
 }
@@ -56,67 +56,32 @@ func DefaultAwsConfig(config Config) AWSConfig {
 	return awsConfig
 }
 
-func AssumeIamRole(config Config) AWSConfig {
-	awsConfig := AWSConfig{}
-	//input := &sts.AssumeRoleInput{
-	//	RoleArn:         config.Iam,
-	//	RoleSessionName: aws.String("assume_role_session" ),
-	//}
-	//result, err := TakeRole(context.TODO(), stsClient, input)
-
-	//appCreds := stscreds.NewAssumeRoleProvider(stsClient, *config.Iam)
-	//value, err := appCreds.Retrieve(context.TODO())
-	//awsConfig.Credentials = value
-	//if err != nil {
-	//	panic(err)
-	//}
-	//if *config.Profile != "" {
-	//	fmt.Println("profile")
-	//	cfg, err := external.LoadDefaultConfig(context.TODO(), external.WithSharedConfigProfile(*config.Profile))
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	awsConfig.Config = cfg
-	//}
-	//} else {
-	//	cfg, err := external.LoadDefaultConfig(context.TODO())
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	awsConfig.Config = cfg
-	//}
-	//if *config.Region != "" {
-	//	awsConfig.Config.Region = *config.Region
-	//}
-	return awsConfig
-}
-
-//Ec2Client returns an ec2 Client
+// Ec2Client returns an ec2 Client
 func (config *AWSConfig) Ec2Client() *ec2.Client {
 	return ec2.NewFromConfig(config.Config)
 }
 
-//ElbClient returns an ec2 Client
+// ElbClient returns an ec2 Client
 func (config *AWSConfig) ElbClient() *elasticloadbalancingv2.Client {
 	return elasticloadbalancingv2.NewFromConfig(config.Config)
 }
 
-//EcsClient returns an ECS Client
+// EcsClient returns an ECS Client
 func (config *AWSConfig) EcsClient() *ecs.Client {
 	return ecs.NewFromConfig(config.Config)
 }
 
-//EventbridgeClient returns and Eventbridge Client
+// EventbridgeClient returns and Eventbridge Client
 func (config *AWSConfig) EventbridgeClient() *eventbridge.Client {
 	return eventbridge.NewFromConfig(config.Config)
 }
 
-//DmsClient returns a databasemigrationservice client
+// DmsClient returns a databasemigrationservice client
 func (config *AWSConfig) DmsClient() *databasemigrationservice.Client {
 	return databasemigrationservice.NewFromConfig(config.Config)
 }
 
-//CdClient returns codedeploy client
+// CdClient returns codedeploy client
 func (config *AWSConfig) CdClient() *codedeploy.Client {
 	return codedeploy.NewFromConfig(config.Config)
 }

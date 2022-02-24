@@ -6,6 +6,7 @@ import (
 	c "github.com/atbagan/sretools/config"
 	"github.com/atbagan/sretools/internal/helpers"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
@@ -14,17 +15,18 @@ import (
 )
 
 var healthCmd = &cobra.Command{
-	Use:   "health-check",
-	Short: "Health Check for ECS Service",
-	Long:  "Checks health for a given target group to determine if your service is healthy or not",
-	Run:   getHealthCheck,
+	Use:    "health-check",
+	Short:  "Health Check for ECS Service",
+	Long:   "Checks health for a given target group to determine if your service is healthy or not",
+	PreRun: toggleDebug,
+	Run:    getHealthCheck,
 }
 
 func init() {
 	ecsCmd.AddCommand(healthCmd)
 }
 
-//List struct for arn and current health status
+// List struct for arn and current health status
 type List struct {
 	ARN    string
 	Status string
@@ -60,12 +62,12 @@ func getHealthCheck(cmd *cobra.Command, args []string) {
 	var configuration c.Config
 	err := viper.Unmarshal(&configuration)
 	if err != nil {
-		fmt.Printf("Unable to decode into struct, %v", err)
+		log.Fatalf("Unable to decode into struct, %v", err)
 	}
 
 	tgs, err := helpers.GetServices(awsConfig.EcsClient())
 	if err != nil {
-		fmt.Printf("Unable to decode into struct, %v", err)
+		log.Fatalf("Unable to decode into struct, %v", err)
 	}
 	numOfTargets := len(tgs.TargetGroup)
 
@@ -100,12 +102,12 @@ func getHealthCheck(cmd *cobra.Command, args []string) {
 			}
 		}
 	case <-time.After(5 * time.Second):
-		fmt.Println("(4/4) TIMED OUT")
-		os.Exit(1)
+		log.Fatal("(4/4) TIMED OUT")
+
 	}
 }
 
-//GetTargetHealth get tg health
+// GetTargetHealth get tg health
 func GetTargetHealth(arn string, n *AtomicInt, ch chan<- *List, svc *elasticloadbalancingv2.Client) {
 	defer wg.Done()
 	var params elasticloadbalancingv2.DescribeTargetHealthInput
@@ -120,8 +122,8 @@ func GetTargetHealth(arn string, n *AtomicInt, ch chan<- *List, svc *elasticload
 
 		result, err := svc.DescribeTargetHealth(context.TODO(), &params)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			log.Fatal(err)
+
 		}
 		for _, v := range result.TargetHealthDescriptions {
 			if v.TargetHealth.State == "healthy" {

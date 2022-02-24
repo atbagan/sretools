@@ -9,12 +9,12 @@ import (
 	"os"
 )
 
-//TargetGroups struct for tgs being returned
+// TargetGroups struct for tgs being returned
 type TargetGroups struct {
 	TargetGroup []string
 }
 
-//GetServices return tgs
+// GetServices return tgs
 func GetServices(svc *ecs.Client) (*TargetGroups, error) {
 
 	var configuration c.Config
@@ -37,7 +37,7 @@ func GetServices(svc *ecs.Client) (*TargetGroups, error) {
 	return tgs, nil
 }
 
-//GetTargetGroupArn return tg arns
+// GetTargetGroupArn return tg arns
 func GetTargetGroupArn(svc *ecs.Client, va []string) *TargetGroups {
 	var tgs TargetGroups
 

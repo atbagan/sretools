@@ -22,7 +22,7 @@ func init() {
 	epsCmd.AddCommand(associateCmd)
 }
 
-//associateLoadBalancerEps associates NLB's with the given endpoint service
+// associateLoadBalancerEps associates NLB's with the given endpoint service
 func associateLoadBalancerEps(cmd *cobra.Command, args []string) {
 	awsConfig := c.DefaultAwsConfig(*settings)
 	nlbArns := helpers.GetNlbLoadBalancerArns(awsConfig.ElbClient())
@@ -46,7 +46,3 @@ func associateLoadBalancerEps(cmd *cobra.Command, args []string) {
 	}
 	fmt.Printf("Associated Load Balancer(s): %s", nlbArns[0])
 }
-
-//func disassociateLoadBalancerEps(cmd *cobra.Command, args []string) {
-//
-//}

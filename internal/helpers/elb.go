@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-//GetNlbLoadBalancerArns gets the NLB arns and returns them
+// GetNlbLoadBalancerArns gets the NLB arns and returns them
 func GetNlbLoadBalancerArns(svc *elasticloadbalancingv2.Client) []string {
 	params := &elasticloadbalancingv2.DescribeLoadBalancersInput{}
 	result, err := svc.DescribeLoadBalancers(context.TODO(), params)
@@ -27,7 +27,7 @@ func GetNlbLoadBalancerArns(svc *elasticloadbalancingv2.Client) []string {
 	return arns
 }
 
-//GetAlbLoadBalancerArns gets the NLB arns and returns them
+// GetAlbLoadBalancerArns gets the NLB arns and returns them
 func GetAlbLoadBalancerArns(svc *elasticloadbalancingv2.Client) []string {
 	params := &elasticloadbalancingv2.DescribeLoadBalancersInput{}
 	result, err := svc.DescribeLoadBalancers(context.TODO(), params)
@@ -47,7 +47,7 @@ func GetAlbLoadBalancerArns(svc *elasticloadbalancingv2.Client) []string {
 	return arns
 }
 
-//GetAllLoadBalancerArns gets the NLB arns and returns them
+// GetAllLoadBalancerArns gets the NLB arns and returns them
 func GetAllLoadBalancerArns(svc *elasticloadbalancingv2.Client) []string {
 	params := &elasticloadbalancingv2.DescribeLoadBalancersInput{}
 	result, err := svc.DescribeLoadBalancers(context.TODO(), params)

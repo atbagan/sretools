@@ -1,16 +1,17 @@
 package sretools
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/atbagan/sretools/config"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"io/ioutil"
 	"os"
 )
 
-var settings = new(config.Config)
+var (
+	settings = new(config.Config)
+)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -18,21 +19,22 @@ var rootCmd = &cobra.Command{
 	Short: "Various tools for sre's dealing with AWS",
 }
 
-//Execute executes the commands. Called in main.Main()
+// Execute executes the commands. Called in main.Main()
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		log.Fatal("Execute func error: ", err)
 		os.Exit(-1)
 	}
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	settings.Verbose = rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Verbose output")
+	rootCmd.PersistentFlags().BoolVarP(&debug, "verbose", "v", false, "verbose logging")
 	settings.Profile = rootCmd.PersistentFlags().StringP("profile", "p", "", "Use a specific profile")
 	settings.Region = rootCmd.PersistentFlags().StringP("region", "r", "", "Use a specific region")
 	settings.Iam = rootCmd.PersistentFlags().String("iam", "", "Use a specific iam role to assume")
 	settings.NameFile = rootCmd.PersistentFlags().StringP("namefile", "n", "", "Use this file to provide names")
+
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -46,31 +48,4 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
-}
-
-func getName(id string) string {
-	if *settings.NameFile != "" {
-		nameFile, err := ioutil.ReadFile(*settings.NameFile)
-		if err != nil {
-			panic(err)
-		}
-		values := make(map[string]string)
-		err = json.Unmarshal(nameFile, &values)
-		if err != nil {
-			panic(err)
-		}
-		if val, ok := values[id]; ok {
-			return val
-		}
-	}
-	return id
-}
-
-func contains(s []string, e string) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
 }

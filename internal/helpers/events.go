@@ -11,7 +11,7 @@ import (
 
 var settings = new(config.Config)
 
-//GetEventbridgeRules gets the NLB arns and returns them
+// GetEventbridgeRules gets the NLB arns and returns them
 func GetEventbridgeRules(svc *eventbridge.Client) []string {
 	params := &eventbridge.ListRulesInput{
 		NamePrefix: aws.String(settings.Eventbridge.Nameprefix),
