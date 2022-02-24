@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/codedeploy/types"
 )
 
@@ -8,14 +9,15 @@ import (
 type Config struct {
 	Verbose     *bool
 	Profile     *string
+	Iam         *string
 	Region      *string
 	NameFile    *string
 	Eps         EpsConfiguration
 	Eventbridge EventbridgeConfiguration
 	Ecs         EcsConfiguration
 	Codedeploy  CodedeployConfiguration
-
-	ErrorCode bool
+	Credentials aws.CredentialsProvider
+	ErrorCode   bool
 }
 
 // EpsConfiguration config struct that holds config values for EPS
