@@ -2,14 +2,17 @@ package config
 
 import (
 	"context"
+	"fmt"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	external "github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials/stscreds"
 	"github.com/aws/aws-sdk-go-v2/service/codedeploy"
 	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
 	"github.com/aws/aws-sdk-go-v2/service/eventbridge"
+	"github.com/aws/aws-sdk-go-v2/service/sts"
 )
 
 //AWSConfig is a holder for AWS Config type information
@@ -21,7 +24,19 @@ type AWSConfig struct {
 func DefaultAwsConfig(config Config) AWSConfig {
 	awsConfig := AWSConfig{}
 
-	if *config.Profile != "" {
+	if *config.Iam != "" {
+		fmt.Println("IAM Role")
+		cfg, err := external.LoadDefaultConfig(context.TODO(), external.WithDefaultRegion(*config.Region))
+		if err != nil {
+			panic(err)
+		}
+		stsClient := sts.NewFromConfig(cfg)
+		creds := stscreds.NewAssumeRoleProvider(stsClient, *config.Iam)
+		cfg.Credentials = aws.NewCredentialsCache(creds)
+		awsConfig.Config = cfg
+
+	} else if *config.Profile != "" {
+		fmt.Println("Profile")
 		cfg, err := external.LoadDefaultConfig(context.TODO(), external.WithSharedConfigProfile(*config.Profile))
 		if err != nil {
 			panic(err)
@@ -37,8 +52,43 @@ func DefaultAwsConfig(config Config) AWSConfig {
 	if *config.Region != "" {
 		awsConfig.Config.Region = *config.Region
 	}
-	return awsConfig
 
+	return awsConfig
+}
+
+func AssumeIamRole(config Config) AWSConfig {
+	awsConfig := AWSConfig{}
+	//input := &sts.AssumeRoleInput{
+	//	RoleArn:         config.Iam,
+	//	RoleSessionName: aws.String("assume_role_session" ),
+	//}
+	//result, err := TakeRole(context.TODO(), stsClient, input)
+
+	//appCreds := stscreds.NewAssumeRoleProvider(stsClient, *config.Iam)
+	//value, err := appCreds.Retrieve(context.TODO())
+	//awsConfig.Credentials = value
+	//if err != nil {
+	//	panic(err)
+	//}
+	//if *config.Profile != "" {
+	//	fmt.Println("profile")
+	//	cfg, err := external.LoadDefaultConfig(context.TODO(), external.WithSharedConfigProfile(*config.Profile))
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	awsConfig.Config = cfg
+	//}
+	//} else {
+	//	cfg, err := external.LoadDefaultConfig(context.TODO())
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//	awsConfig.Config = cfg
+	//}
+	//if *config.Region != "" {
+	//	awsConfig.Config.Region = *config.Region
+	//}
+	return awsConfig
 }
 
 //Ec2Client returns an ec2 Client
