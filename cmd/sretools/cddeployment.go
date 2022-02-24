@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/codedeploy/types"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 	"os"
 )
 
@@ -28,7 +29,8 @@ func createDeployment(cmd *cobra.Command, args []string) {
 	var configuration c.Config
 	err := viper.Unmarshal(&configuration)
 	if err != nil {
-		fmt.Printf("Unable to decode into struct, %v", err)
+		logger.Error("Unable to decode into struct",
+			zap.Error(err))
 	}
 
 	params := &cd.CreateDeploymentInput{
@@ -59,12 +61,13 @@ func createDeployment(cmd *cobra.Command, args []string) {
 		TargetInstances:             nil,
 		UpdateOutdatedInstancesOnly: false,
 	}
-	_, err = awsConfig.CdClient().CreateDeployment(context.TODO(), params)
+	result, err := awsConfig.CdClient().CreateDeployment(context.TODO(), params)
 	if err != nil {
 		fmt.Sprintf("failed to load the config, %v", err)
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	fmt.Println("deployment in progress with deployment id: ", &result.DeploymentId)
 }
 
 //func createDeploymentConfig(cmd *cobra.Command, args []string)  {
