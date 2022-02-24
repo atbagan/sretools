@@ -1,4 +1,4 @@
-<img align="right" width="290" height="450" src="https://github.com/atbagan/sretools/blob/main/docs/images/wizardry_gopher.png">
+<img align="right" width="290" height="300" src="https://github.com/atbagan/sretools/blob/main/docs/images/wizardry_gopher.png">
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
