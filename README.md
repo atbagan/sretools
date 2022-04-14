@@ -26,10 +26,6 @@ This project is fulfilling my need for complex aws cli commands that can be used
 The type of automation that one would see and use as a Site Reliability Engineer.  Features will be added
 as they are needed by me and my teams.
 
-Why am I not using pkg?  Currently, with the state of the project it doesn't make sense to me. Things will be refactored
-as the project matures, and I feel it is necessary and at a state where moving things from internal to pkg makes 
-sense.
-
 Examples will be added closer to the v0.01 release
 
 
