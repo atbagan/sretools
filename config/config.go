@@ -28,6 +28,7 @@ type Config struct {
 	Iam         *string
 	Region      *string
 	NameFile    *string
+	Dms         DmsConfiguration
 	Eps         EpsConfiguration
 	Eventbridge EventbridgeConfiguration
 	Ecs         EcsConfiguration
@@ -67,4 +68,8 @@ type CodedeployConfiguration struct {
 	Key                           string
 	Etag                          string
 	Version                       string
+}
+
+type DmsConfiguration struct {
+	TaskArn string
 }
