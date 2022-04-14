@@ -109,16 +109,16 @@ func getHealthCheck(cmd *cobra.Command, args []string) {
 	select {
 	case <-ch:
 		if n.Value() == numOfTargets {
-			fmt.Println("(4/4) All target groups are healthy")
+			fmt.Println("All target groups are healthy")
 			os.Exit(0)
 		} else {
-			fmt.Println("(4/4) Not all target groups are healthy. Please log in to your AWS console to verify")
+			fmt.Println("Not all target groups are healthy. Please log in to your AWS console to verify")
 			if configuration.ErrorCode {
 				os.Exit(1)
 			}
 		}
 	case <-time.After(5 * time.Second):
-		log.Fatal("(4/4) TIMED OUT")
+		log.Fatal("TIMED OUT")
 
 	}
 }

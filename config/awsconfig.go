@@ -29,6 +29,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
 	"github.com/aws/aws-sdk-go-v2/service/eventbridge"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
+	"log"
 )
 
 // AWSConfig is a holder for AWS Config type information
@@ -36,39 +37,38 @@ type AWSConfig struct {
 	Config aws.Config
 }
 
-// DefaultAwsConfig aws config
+// DefaultAwsConfig returns the aws config struct credentials
 func DefaultAwsConfig(config Config) AWSConfig {
 	awsConfig := AWSConfig{}
-
-	if *config.Iam != "" {
+	switch {
+	case *config.Iam != "":
 		fmt.Println("IAM Role")
 		cfg, err := external.LoadDefaultConfig(context.TODO(), external.WithDefaultRegion(*config.Region))
 		if err != nil {
-			panic(err)
+			log.Fatalf("Error loading credentials: %v", err)
 		}
 		stsClient := sts.NewFromConfig(cfg)
 		creds := stscreds.NewAssumeRoleProvider(stsClient, *config.Iam)
 		cfg.Credentials = aws.NewCredentialsCache(creds)
 		awsConfig.Config = cfg
-
-	} else if *config.Profile != "" {
+	case *config.Profile != "":
 		fmt.Println("Profile")
 		cfg, err := external.LoadDefaultConfig(context.TODO(), external.WithSharedConfigProfile(*config.Profile))
 		if err != nil {
-			panic(err)
+			log.Fatalf("Error loading credentials: %v", err)
 		}
 		awsConfig.Config = cfg
-	} else {
+	default:
 		cfg, err := external.LoadDefaultConfig(context.TODO())
 		if err != nil {
-			panic(err)
+			log.Fatalf("Error loading credentials: %v", err)
 		}
 		awsConfig.Config = cfg
+
 	}
 	if *config.Region != "" {
 		awsConfig.Config.Region = *config.Region
 	}
-
 	return awsConfig
 }
 
