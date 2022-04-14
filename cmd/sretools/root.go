@@ -49,8 +49,9 @@ func init() {
 	settings.Profile = rootCmd.PersistentFlags().StringP("profile", "p", "", "Use a specific profile")
 	settings.Region = rootCmd.PersistentFlags().StringP("region", "r", "", "Use a specific region")
 	settings.Iam = rootCmd.PersistentFlags().String("iam", "", "Use a specific iam role to assume")
+	settings.Arn = rootCmd.PersistentFlags().String("arn", "", "Use a specific arn")
 	settings.NameFile = rootCmd.PersistentFlags().StringP("namefile", "n", "", "Use this file to provide names")
-
+	//settings.Ecs.Cluster = rootCmd.PersistentFlags().String("CLUSTER","", "cluster name")
 }
 
 // initConfig reads in config file and ENV variables if set.
