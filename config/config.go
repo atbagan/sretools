@@ -35,6 +35,7 @@ type Config struct {
 	Codedeploy  CodedeployConfiguration
 	Credentials aws.CredentialsProvider
 	ErrorCode   bool
+	Arn         *string
 }
 
 // EpsConfiguration config struct that holds config values for EPS
