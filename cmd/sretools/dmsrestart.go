@@ -17,6 +17,7 @@
 package sretools
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 )
 
@@ -32,5 +33,6 @@ func init() {
 }
 
 func restartDms(cmd *cobra.Command, args []string) {
-
+	// TODO
+	fmt.Println("Implement me")
 }
