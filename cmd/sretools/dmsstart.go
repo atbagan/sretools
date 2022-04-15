@@ -20,6 +20,7 @@ import (
 	"context"
 	"fmt"
 	c "github.com/atbagan/sretools/config"
+	"github.com/atbagan/sretools/internal/helpers"
 	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice"
 	"github.com/aws/aws-sdk-go-v2/service/databasemigrationservice/types"
 	"github.com/spf13/cobra"
@@ -47,7 +48,7 @@ func startDms(cmd *cobra.Command, args []string) {
 		fmt.Printf("Unable to decode into struct, %v", err)
 	}
 
-	arns := arnSplit(*settings.Arn)
+	arns := helpers.ArnSplit(*settings.Arn)
 	var wg sync.WaitGroup
 	wg.Add(len(arns))
 
