@@ -25,6 +25,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
+	"sync"
 )
 
 var dmsStartCmd = &cobra.Command{
@@ -46,16 +47,25 @@ func startDms(cmd *cobra.Command, args []string) {
 		fmt.Printf("Unable to decode into struct, %v", err)
 	}
 
-	params := &databasemigrationservice.StartReplicationTaskInput{
-		ReplicationTaskArn:       settings.Arn,
-		StartReplicationTaskType: types.StartReplicationTaskTypeValue("resume-processing"),
-	}
+	arns := arnSplit(*settings.Arn)
+	var wg sync.WaitGroup
+	wg.Add(len(arns))
 
-	resp, err := awsConfig.DmsClient().StartReplicationTask(context.TODO(), params)
-
-	if err != nil {
-		fmt.Printf("failed to start dms task, %v", err)
-		os.Exit(1)
+	for i := 0; i < len(arns); i++ {
+		go func(i int) {
+			defer wg.Done()
+			params := &databasemigrationservice.StartReplicationTaskInput{
+				ReplicationTaskArn:       &arns[i],
+				StartReplicationTaskType: types.StartReplicationTaskTypeValue("resume-processing"),
+			}
+			resp, err := awsConfig.DmsClient().StartReplicationTask(context.TODO(), params)
+			if err != nil {
+				fmt.Printf("failed to start dms task, %v", err)
+				os.Exit(1)
+			}
+			fmt.Printf("starting dms replication task: %s ", *resp.ReplicationTask.ReplicationTaskIdentifier)
+		}(i)
 	}
-	fmt.Printf("starting dms replication task: %s ", *resp.ReplicationTask.ReplicationTaskIdentifier)
+	wg.Wait()
+
 }

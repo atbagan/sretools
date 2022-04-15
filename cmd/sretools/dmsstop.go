@@ -24,6 +24,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
+	"strings"
+	"sync"
 )
 
 var dmsStopCmd = &cobra.Command{
@@ -45,15 +47,27 @@ func stopDms(cmd *cobra.Command, args []string) {
 		fmt.Printf("Unable to decode into struct, %v", err)
 	}
 
-	params := &databasemigrationservice.StopReplicationTaskInput{
-		ReplicationTaskArn: settings.Arn,
-	}
+	arns := arnSplit(*settings.Arn)
+	var wg sync.WaitGroup
+	wg.Add(len(arns))
 
-	resp, err := awsConfig.DmsClient().StopReplicationTask(context.TODO(), params)
-
-	if err != nil {
-		fmt.Printf("failed to stop dms task, %v", err)
-		os.Exit(1)
+	for i := 0; i < len(arns); i++ {
+		go func(i int) {
+			defer wg.Done()
+			params := &databasemigrationservice.StopReplicationTaskInput{
+				ReplicationTaskArn: &arns[i],
+			}
+			resp, err := awsConfig.DmsClient().StopReplicationTask(context.TODO(), params)
+			if err != nil {
+				fmt.Printf("failed to stop dms task, %v", err)
+				os.Exit(1)
+			}
+			fmt.Printf("stopping dms replication task: %s ", *resp.ReplicationTask.ReplicationTaskIdentifier)
+		}(i)
 	}
-	fmt.Printf("stopping dms replication task: %s ", *resp.ReplicationTask.ReplicationTaskIdentifier)
+	wg.Wait()
+}
+
+func arnSplit(arn string) []string {
+	return strings.Split(arn, ",")
 }
