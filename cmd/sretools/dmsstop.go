@@ -33,10 +33,11 @@ func stopDms(cmd *cobra.Command, args []string) {
 		ReplicationTaskArn: settings.Arn,
 	}
 
-	_, err = awsConfig.DmsClient().StopReplicationTask(context.TODO(), params)
+	resp, err := awsConfig.DmsClient().StopReplicationTask(context.TODO(), params)
 
 	if err != nil {
 		fmt.Printf("failed to stop dms task, %v", err)
 		os.Exit(1)
 	}
+	fmt.Printf("stopping dms replication task: %s ", *resp.ReplicationTask.ReplicationTaskIdentifier)
 }
